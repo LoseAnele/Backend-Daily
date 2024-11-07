@@ -24,6 +24,9 @@ def write_letters(names, letter):
 
 try:
     write_letters(get_names("./mail merge/input/Names/invited_names.txt"), get_letter("./mail merge/input/letters/starting_letter.docx"))
+    print("Letters created successfully for the following names:")
+    for name in get_names("./mail merge/input/Names/invited_names.txt"):
+        print(name.replace("\n", ""))
 except FileNotFoundError as e:
     _words = e.filename.split('/')
     filename = _words[-1]
