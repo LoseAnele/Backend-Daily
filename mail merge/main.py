@@ -13,6 +13,7 @@ def get_letter(filename):
         letter = file.read()
     return letter
 def write_letters(names, letter):
+    for name in names:
         name = name.replace("\n", "")
         new_letter = letter.replace("[name]", name)
         
@@ -21,7 +22,17 @@ def write_letters(names, letter):
         with open(f"./mail merge/ReadyToSend/letter_for_{name}.docx", "w") as file:
             file.write(new_letter)
 
-write_letters(get_names("./mail merge/input/Names/invited_names.txt"), get_letter("./mail merge/input/letters/starting_letter.docx"))
+try:
+    write_letters(get_names("./mail merge/input/Names/invited_names.txt"), get_letter("./mail merge/input/letters/starting_letter.docx"))
+except FileNotFoundError as e:
+    _words = e.filename.split('/')
+    filename = _words[-1]
+    directory = '/'.join(_words[:-1])
+    print(f"File not found: {filename} in directory: {directory}. Error: {e.strerror}")
+except OSError as e:
+    print(f"Error: {e.strerror}")
+except Exception as e:
+    print(f"Error: {e}")
 
 
     
