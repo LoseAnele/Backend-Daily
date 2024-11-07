@@ -4,19 +4,24 @@
 #Save the letters in the folder "ReadyToSend".
 import os
 
-with open("./mail merge/input/Names/invited_names.txt", "r") as file:
-    names = file.readlines()
-
-for name in names:
-    with open("./mail merge/input/letters/starting_letter.docx", "r") as file:
-        name = name.replace("\n", "")
+def get_names(filename):
+    with open(filename, "r") as file:
+        names = file.readlines()
+    return names
+def get_letter(filename):
+    with open(filename, "r") as file:
         letter = file.read()
+    return letter
+def write_letters(names, letter):
+        name = name.replace("\n", "")
         new_letter = letter.replace("[name]", name)
         
         if not os.path.exists("./mail merge/ReadyToSend"):
             os.makedirs("./mail merge/ReadyToSend")
         with open(f"./mail merge/ReadyToSend/letter_for_{name}.docx", "w") as file:
             file.write(new_letter)
+
+write_letters(get_names("./mail merge/input/Names/invited_names.txt"), get_letter("./mail merge/input/letters/starting_letter.docx"))
 
 
     
