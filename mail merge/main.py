@@ -21,23 +21,24 @@ def write_letters(names, letter):
             os.makedirs("./mail merge/ReadyToSend")
         with open(f"./mail merge/ReadyToSend/letter_for_{name}.docx", "w") as file:
             file.write(new_letter)
+def main():
+    try:
+        write_letters(get_names("./mail merge/input/Names/invited_names.txt"), get_letter("./mail merge/input/letters/starting_letter.docx"))
+        print("Letters created successfully for the following names:")
+        for name in get_names("./mail merge/input/Names/invited_names.txt"):
+            print(name.replace("\n", ""))
+    except FileNotFoundError as e:
+        _words = e.filename.split('/')
+        filename = _words[-1]
+        directory = '/'.join(_words[:-1])
+        print(f"File not found: {filename} in directory: {directory}. Error: {e.strerror}")
+    except OSError as e:
+        print(f"Error: {e.strerror}")
+    except Exception as e:
+        print(f"Error: {e}")
 
-try:
-    write_letters(get_names("./mail merge/input/Names/invited_names.txt"), get_letter("./mail merge/input/letters/starting_letter.docx"))
-    print("Letters created successfully for the following names:")
-    for name in get_names("./mail merge/input/Names/invited_names.txt"):
-        print(name.replace("\n", ""))
-except FileNotFoundError as e:
-    _words = e.filename.split('/')
-    filename = _words[-1]
-    directory = '/'.join(_words[:-1])
-    print(f"File not found: {filename} in directory: {directory}. Error: {e.strerror}")
-except OSError as e:
-    print(f"Error: {e.strerror}")
-except Exception as e:
-    print(f"Error: {e}")
-
-
+if __name__ == "__main__":
+    main()
     
 #Hint1: This method will help you: https://www.w3schools.com/python/ref_file_readlines.asp
     #Hint2: This method will also help you: https://www.w3schools.com/python/ref_string_replace.asp
